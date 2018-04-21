@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerCharacter : MonoBehaviour
 {
 
-    private float walkSpeed = 4.0f;
+    private float walkSpeed = 8.0f;
     private float lookSpeed = 2.0f;
 
     public Transform eyeCamera;
@@ -14,9 +14,15 @@ public class PlayerCharacter : MonoBehaviour
     public CharacterController controller;
     private bool canLook;
 
+    private float interactDistance = 2.0f;
+
     // Use this for initialization
     void Start()
     {
+        // Capture the cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        canLook = true;
     }
 
     // Update is called once per frame
@@ -26,6 +32,19 @@ public class PlayerCharacter : MonoBehaviour
         DoMovement();
         if(canLook)
             DoLooking();
+
+        // Do InteractInput
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Debug.DrawRay(eyeCamera.position, eyeCamera.forward * interactDistance, Color.red, 10.0f);
+            if (Physics.Raycast(eyeCamera.position, eyeCamera.forward, out hit, interactDistance, ~0))
+            {
+                Interactable other = hit.collider.GetComponent<Interactable>();
+                if (other)
+                    other.OnInteract();
+            }
+        }
     }
 
     private void DoMouseLock()
