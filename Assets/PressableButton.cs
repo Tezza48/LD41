@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PressableButton : Interactable {
 
-    public Activatable thingToActivate;
+    public Activatable[] thingsToActivate;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +19,9 @@ public class PressableButton : Interactable {
     public override void OnInteract()
     {
         base.OnInteract();
-        thingToActivate.OnActivate();
+        foreach (var item in thingsToActivate)
+        {
+            item.OnActivate();
+        }
     }
 }

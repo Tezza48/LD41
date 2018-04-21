@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerCharacter : MonoBehaviour
 {
 
-    private float walkSpeed = 8.0f;
+    private float walkSpeed = 4.0f;
     private float lookSpeed = 2.0f;
 
     public Transform eyeCamera;
